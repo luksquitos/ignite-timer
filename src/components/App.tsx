@@ -1,8 +1,14 @@
+import { Button } from "./Button"
+
 export function App() {
 
   return (
     <>
-      <h1>Estou funcionando</h1>
+      <Button variant="primary"/>
+      <Button variant="secondary"/>
+      <Button variant="warning"/>
+      <Button variant="danger"/>
+      <Button />
     </>
   )
 }
