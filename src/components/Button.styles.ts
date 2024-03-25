@@ -16,8 +16,13 @@ const colors = {
 export const ButtonContainer = styled.button<IButtonContainer>`
   width: 100px;
   height: 40px;
-  color: white;
-  ${props => {
+  margin: 6px;
+  border: 0;
+  border-radius: 4px;
+  
+  color: ${props => props.theme.color};
+  background-color: ${props => props.theme.secondary};
+  /* ${props => {
     return css`background-color: ${colors[props.variant]}`
-  }}
+  }} */
 `
