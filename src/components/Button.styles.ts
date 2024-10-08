@@ -20,8 +20,8 @@ export const ButtonContainer = styled.button<IButtonContainer>`
   border: 0;
   border-radius: 4px;
   
-  color: ${props => props.theme.color};
-  background-color: ${props => props.theme.secondary};
+  color: ${props => props.theme.color}; //É possível acessar o atributo themes por aqui
+  /* background-color: ${props => props.theme.secondary}; */
   /* ${props => {
     return css`background-color: ${colors[props.variant]}`
   }} */
