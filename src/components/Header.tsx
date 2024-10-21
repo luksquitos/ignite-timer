@@ -1,7 +1,7 @@
 export function Header(){
   return (
     <div className="flex ">
-      <h1 className="text-red-600 flex">
+      <h1 className="bg-white">
         Header
       </h1>
       <h1>

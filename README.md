@@ -5,7 +5,7 @@
 
 ## Ferramentas utilizadas
 
-- Styled Components
+- Tailwind
 - React Hook Form
 - Zod
 - React Router DOM
