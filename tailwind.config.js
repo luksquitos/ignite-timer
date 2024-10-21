@@ -2,6 +2,7 @@
 module.exports = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
+<<<<<<< HEAD
     extend: {
       colors: {
         "green-dark":"var(--green-dark)",
@@ -18,6 +19,11 @@ module.exports = {
         "gray7":"var(--gray7)",
       },
     },
+=======
+    extend: {colors: {
+      robson:"var(--background)"
+    }},
+>>>>>>> ca5169d36e0dfc4b7f8eb6aad1ba330fdf78a9cd
   },
   plugins: [],
 }
