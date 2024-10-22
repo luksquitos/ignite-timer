@@ -8,9 +8,8 @@ export function App() {
 
   return (
     <BrowserRouter>
-    <Router />
       <main className="bg-gray1 h-screen">
-        <Header />
+        <Router />
       </main>
     </BrowserRouter>
   )
