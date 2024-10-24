@@ -37,3 +37,7 @@ body, input, textarea, button {
 h1, p {
   color: var(--gray7)
 }
+
+.active > svg{
+  color: var(--green)
+}
