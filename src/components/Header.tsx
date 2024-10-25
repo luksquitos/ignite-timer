@@ -10,14 +10,15 @@ import { Timer, Scroll } from "@phosphor-icons/react"
 </NavLink> */}
 
 //TODO Tooltip
+//https://daisyui.com/components/tooltip/
 //https://www.radix-ui.com/primitives/docs/components/tooltip
 
 
 export function Header(){
   return (
-    <header className="flex justify-between">
-      <img src={IgniteLogo} alt="#" />
-      <nav className="flex gap-2">
+    <header className="flex justify-between w-full">
+      <img src={IgniteLogo} alt="#" className="size-10" />
+      <nav className="flex gap-2" >
         <NavLink to={"/"} className="size-12 flex justify-center items-center border-b-[3px] border-transparent hover:border-green"> 
           <Timer size={24} className="text-gray7"/>
         </NavLink>

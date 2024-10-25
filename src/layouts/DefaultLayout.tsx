@@ -6,7 +6,7 @@ import { Header } from "../components/Header";
 export function DefaultLayout(){
   return (
     // <div className="w-[calc(100vw-20rem)] h-[calc(100vh-10rem)] bg-gray2 rounded p-10">
-    <div className="w-[74rem] h-[46.5rem] bg-gray2 rounded p-10">
+    <div className=" w-[74rem] h-[46.5rem] flex items-center flex-col bg-gray2 rounded p-10">
       <Header />
       <Outlet /> 
     </div>
