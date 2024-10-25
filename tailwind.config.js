@@ -17,6 +17,9 @@ module.exports = {
         "gray6":"var(--gray6)",
         "gray7":"var(--gray7)",
       },
+      fontFamily: {
+        "nano-r": ["Roboto-Mono", "sans-serif"]
+      }
     },
   },
   plugins: [],
