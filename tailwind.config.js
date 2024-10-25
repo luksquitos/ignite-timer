@@ -18,7 +18,7 @@ module.exports = {
         "gray7":"var(--gray7)",
       },
       fontFamily: {
-        "nano-r": ["Roboto-Mono", "sans-serif"]
+        "mono-r": ["Roboto Mono", "sans-serif"]
       }
     },
   },
