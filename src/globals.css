@@ -35,6 +35,13 @@ body, input, textarea, button {
   font-size: 1rem;
 }
 
+/* Remove arrow do input do tipo number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 /* https://stackoverflow.com/questions/17758578/how-to-remove-the-arrows-in-a-scroll-bar-through-css */
 ::-webkit-scrollbar {
