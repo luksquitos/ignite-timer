@@ -42,6 +42,11 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+/* Remove arrow do input do tipo texto */
+::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
 
 /* https://stackoverflow.com/questions/17758578/how-to-remove-the-arrows-in-a-scroll-bar-through-css */
 ::-webkit-scrollbar {

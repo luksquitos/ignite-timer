@@ -7,7 +7,12 @@ export function Input(){
       <input 
         className="flex justify-center text-center bg-transparent w-64 text-gray7 px-2 border-b-2 border-b-gray4 placeholder:text-gray4 focus:outline-none focus:border-b-gray7 "
         placeholder="Dê um nome para o seu projeto" 
-        />
+        list="task-list"
+      />
+      <datalist id="task-list">
+        <option value="Estudar para prova" />
+        <option value="Consertar Ronaldo" />
+      </datalist>
       <p>durante</p>
       <div className="flex justify-center items-center border-b-2 border-b-gray4 gap-2">
         <button className="text-white">-</button>
