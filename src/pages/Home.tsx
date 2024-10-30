@@ -7,7 +7,7 @@ export function Home(){
     <main className="mt-[75px] w-[655px] h-[420px]">
       <Input/>
       <Timer/>
-      <Button/>
+      <Button color="green"/>
     </main>
   )
 }
