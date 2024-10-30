@@ -4,9 +4,9 @@ import { Task } from "./Task";
 export function TaskBoard(){
   return (
     <section>
-      <header className="mt-8 px-6 w-full h-[54px] bg-gray3 text-gray7 grid grid-cols-9 rounded-tl-lg rounded-tr-lg">
-        <p className="flex items-center col-span-3">Tarefa</p>
-        <p className="flex items-center ">Duração</p>
+      <header className="mt-8 px-6 w-full h-[54px] bg-gray3 text-gray7 grid grid-cols-11 rounded-tl-lg rounded-tr-lg">
+        <p className="flex items-center col-span-4">Tarefa</p>
+        <p className="flex items-center col-span-2">Duração</p>
         <p className="flex items-center col-span-3">Início</p>
         <p className="flex items-center col-span-2">Status</p>
       </header>
