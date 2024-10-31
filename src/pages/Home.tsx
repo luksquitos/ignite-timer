@@ -4,10 +4,10 @@ import { Timer } from "../components/Timer";
 
 export function Home(){
   return (
-    <main className="mt-[75px] w-[655px] h-[420px]">
+    <form className="mt-[75px] w-[655px] h-[420px]">
       <Input/>
       <Timer/>
-      <Button color="green"/>
-    </main>
+      <Button color="green" disabled />
+    </form>
   )
 }
