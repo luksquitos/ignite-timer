@@ -26,6 +26,8 @@ export function Input({registerProperty}: InputProps){
           type="number"
           className="overflow-hidden w-5 bg-transparent flex justify-center text-center focus:outline-none text-gray7"
           placeholder="00"
+          min={1}
+          max={60}
           {...registerProperty("numberInput", {valueAsNumber: true})} /* objeto de configuração*/
         />
         <button className="text-white">+</button>

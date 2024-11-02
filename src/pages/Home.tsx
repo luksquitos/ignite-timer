@@ -2,11 +2,23 @@ import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Timer } from "../components/Timer";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from 'zod';
+
+
+const createNewTaskValidationSchema = zod.object({
+  "task": zod.string().min(1, "Preencha o campo"),
+  "numberInput": zod.number()
+    .min(1, "O número mínimo é 1")
+    .max(60, "O número máximo é 60")
+})
 
 
 export function Home(){
-  const { register, handleSubmit, watch } = useForm();
-  const buttonDisabled = !watch("task") || !watch("numberInput")
+  const { register, handleSubmit, watch, } = useForm({
+    resolver: zodResolver(createNewTaskValidationSchema)
+  });
+  const buttonDisabled = !watch("task")
   
   function createNewTask(data: any){
     console.log(data)
