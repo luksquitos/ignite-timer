@@ -13,14 +13,24 @@ const createNewTaskValidationSchema = zod.object({
     .max(60, "O número máximo é 60")
 })
 
+// interface newTaskFormData {
+//   "task": string,
+//   "numberInput": number,
+// }
+
+type newTaskFormData = zod.infer<typeof createNewTaskValidationSchema>
 
 export function Home(){
-  const { register, handleSubmit, watch, } = useForm({
-    resolver: zodResolver(createNewTaskValidationSchema)
+  const { register, handleSubmit, watch, } = useForm<newTaskFormData>({
+    resolver: zodResolver(createNewTaskValidationSchema),
+    defaultValues: {
+      "task": "",
+      "numberInput": 0
+    }
   });
   const buttonDisabled = !watch("task")
   
-  function createNewTask(data: any){
+  function createNewTask(data: newTaskFormData){
     console.log(data)
   }
 
