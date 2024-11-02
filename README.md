@@ -5,10 +5,10 @@
 
 ## Ferramentas utilizadas
 
-- Tailwind
-- React Hook Form
-- Zod
-- React Router DOM
+- [Tailwind](https://tailwindcss.com/)
+- [React Hook Form](https://www.react-hook-form.com/)
+- [Zod](https://zod.dev/)
+- [React Router DOM](https://reactrouter.com/en/main)
 - Context Api do React
 - Hook useReducer
 - Immer (Imutabilidade avançada)
