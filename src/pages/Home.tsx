@@ -21,7 +21,7 @@ const createNewTaskValidationSchema = zod.object({
 type newTaskFormData = zod.infer<typeof createNewTaskValidationSchema>
 
 export function Home(){
-  const { register, handleSubmit, watch, } = useForm<newTaskFormData>({
+  const { register, handleSubmit, watch, reset} = useForm<newTaskFormData>({
     resolver: zodResolver(createNewTaskValidationSchema),
     defaultValues: {
       "task": "",
@@ -32,6 +32,7 @@ export function Home(){
   
   function createNewTask(data: newTaskFormData){
     console.log(data)
+    reset()
   }
 
   return (
