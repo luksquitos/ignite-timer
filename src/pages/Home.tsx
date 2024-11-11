@@ -4,7 +4,7 @@ import { Timer } from "../components/Timer";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from 'zod';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { subSeconds } from "date-fns";
 
 
@@ -56,6 +56,14 @@ export function Home(){
     reset()
   }
 
+  useEffect(() => {
+    if(timerCountdown){
+      setTimeout(() => {
+        subSecTimerCountDown()
+      }, 1000);
+    }
+  }, [timerCountdown])
+  
   function subSecTimerCountDown(){
     //TODO Como fazer para o componente continuar atualizando simultaneamente ?
     setTimerCountDown(subSeconds(timerCountdown, 1))
