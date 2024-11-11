@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from 'zod';
 import { useState } from "react";
+import { subSeconds } from "date-fns";
 
 
 const createNewTaskValidationSchema = zod.object({
@@ -37,6 +38,7 @@ export function Home(){
   });
   const [tasks, setTask] = useState<Task[]>([])
   const [activeTask, setActiveTask] = useState<Task | null>(null)
+  const [timerCountdown, setTimerCountDown] = useState<Date | null>(null)
   const buttonDisabled = !watch("task")
   
   function createNewTask(data: newTaskFormData){
@@ -46,16 +48,23 @@ export function Home(){
       "description": data.task,
       "minutesAmount": data.numberInput
     }
-    setActiveTask(newTask)
     // setTask([...tasks, newTask]) // Não garante o estado atual do objeto.
     setTask((state) => [...state, newTask]) // Garante o estado atual do objeto
+    setActiveTask(newTask)
+    //genius
+    setTimerCountDown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
     reset()
   }
 
+  function subSecTimerCountDown(){
+    //TODO Como fazer para o componente continuar atualizando simultaneamente ?
+    setTimerCountDown(subSeconds(timerCountdown, 1))
+  }
+    
   return (
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">
-      <Input registerProperty={register}/> 
-      <Timer/>
+      <Input registerProperty={register} subSecTimerCountDown={subSecTimerCountDown}/> 
+      <Timer currentTime={timerCountdown}/>
       <Button color="green" disabled={buttonDisabled} />
     </form>
   )
