@@ -5,12 +5,21 @@ const ButtonVariants = {
   "red": "bg-red hover:bg-reddark",
 }
 
-// Estava apenas testando o tailwind
-export function Button({color, ...props}: {color: "green" | "red" ; [key: string]: any} ){
+
+export function Button({hasActiveTask, interruptTimer, ...props}: {hasActiveTask: boolean; [key: string]: any} ){
+  if(hasActiveTask){
+    return (
+      <button onClick={interruptTimer} className={`mt-[76px] w-full h-12 flex justify-center items-center gap-2 rounded-lg ${ButtonVariants['red']} text-gray7  disabled:opacity-70 disabled:cursor-not-allowed `}>
+        <HandPalm size={24}/>
+        <p>Interromper</p>
+      </button>
+    )
+  }
+  
   return (
-    <button {...props} type="submit" className={`mt-[76px] w-full h-12 flex justify-center items-center gap-2 rounded-lg ${ButtonVariants[color]} text-gray7  disabled:opacity-70 disabled:cursor-not-allowed `}>
-      { color == "green" ? <Play size={24}/> : <HandPalm size={24}/>}
-      { color == "green" ? <p>Começar</p> : <p>Interromper</p>}
+    <button {...props} type="submit" className={`mt-[76px] w-full h-12 flex justify-center items-center gap-2 rounded-lg ${ButtonVariants['green']} text-gray7  disabled:opacity-70 disabled:cursor-not-allowed `}>
+      <Play size={24}/>
+      <p>Começar</p>
     </button>
   )
 }

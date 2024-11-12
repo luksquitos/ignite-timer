@@ -40,6 +40,7 @@ export function Home(){
   const [activeTask, setActiveTask] = useState<Task | null>(null)
   const [timerCountdown, setTimerCountDown] = useState<Date | null>(null)
   const buttonDisabled = !watch("task")
+  const hasActiveTask = activeTask != null
   
   function createNewTask(data: newTaskFormData){
     const id = String(new Date().getTime())
@@ -54,6 +55,11 @@ export function Home(){
     //genius
     setTimerCountDown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
     reset()
+  }
+  
+  function interruptTimer(){
+    setTimerCountDown(null)
+    setActiveTask(null)
   }
   
   useEffect(() => {
@@ -73,14 +79,15 @@ export function Home(){
             // Se o tempo acabou, limpa o intervalo
             if (!minutes && !seconds) {
               clearInterval(interval);
+              setActiveTask(null)
               return null;
             }
             return newTime;
           }
           return null;
         });
-      }, 1000);
-
+      }, 100);
+      
       // Limpa o intervalo quando o componente é desmontado ou o timerCountdown muda
       return () => clearInterval(interval);
     }
@@ -90,7 +97,7 @@ export function Home(){
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">
       <Input registerProperty={register}/> 
       <Timer currentTime={timerCountdown}/>
-      <Button color="green" disabled={buttonDisabled} />
+      <Button hasActiveTask={hasActiveTask} interruptTimer={interruptTimer} disabled={buttonDisabled} />
     </form>
   )
 }
