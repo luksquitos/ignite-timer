@@ -55,15 +55,30 @@ export function Home(){
     setTimerCountDown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
     reset()
   }
-
+  
   useEffect(() => {
-    if(timerCountdown){
+    // a sobreposição do settimeout está fazendo o 
+    // codigo bugar.
+    if(activeTask){
+      // subSecTimerCountDown()
       setTimeout(() => {
         subSecTimerCountDown()
+        // console.log(timerCountdown)
       }, 1000);
+      const minutes = timerCountdown.getMinutes()
+      const seconds = timerCountdown.getSeconds()
+      
+      if(!minutes && !seconds){
+        setActiveTask(null)
+        setTimerCountDown(null)
+        console.log(timerCountdown)
+      }
     }
+    console.log(timerCountdown)
+
   }, [timerCountdown])
   
+
   function subSecTimerCountDown(){
     //TODO Como fazer para o componente continuar atualizando simultaneamente ?
     setTimerCountDown(subSeconds(timerCountdown, 1))
@@ -72,7 +87,7 @@ export function Home(){
   return (
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">
       <Input registerProperty={register} subSecTimerCountDown={subSecTimerCountDown}/> 
-      <Timer currentTime={timerCountdown}/>
+      <Timer currentTime={timerCountdown} setTimerCountDown={setTimerCountDown}/>
       <Button color="green" disabled={buttonDisabled} />
     </form>
   )
