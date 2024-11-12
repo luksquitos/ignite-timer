@@ -1,6 +1,6 @@
 import { NumberTimer } from "./NumberTimer"
 
-export function Timer({currentTime}:{currentTime: Date,}) {
+export function Timer({currentTime}:{currentTime: Date | null,}) {
   const minutes = currentTime? String(currentTime.getMinutes()).padStart(2, "0"): "00"
   const seconds = currentTime? String(currentTime.getSeconds()).padStart(2, "0"): "00"
   

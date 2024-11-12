@@ -57,37 +57,39 @@ export function Home(){
   }
   
   useEffect(() => {
-    // a sobreposição do settimeout está fazendo o 
-    // codigo bugar.
-    if(activeTask){
-      // subSecTimerCountDown()
-      setTimeout(() => {
-        subSecTimerCountDown()
-        // console.log(timerCountdown)
+    // Esse código foi corrigido pelo chat. De 
+    // acordo com ele, o setTimeout estava
+    // se sobrepondo entre os loops do useeffect.
+    
+    // Verifica se o timerCountdown está definido
+    if (timerCountdown) {
+      const interval = setInterval(() => {
+        setTimerCountDown((prevCountdown) => {
+          if (prevCountdown) {
+            const newTime = subSeconds(prevCountdown, 1);
+            const minutes = newTime.getMinutes();
+            const seconds = newTime.getSeconds();
+
+            // Se o tempo acabou, limpa o intervalo
+            if (!minutes && !seconds) {
+              clearInterval(interval);
+              return null;
+            }
+            return newTime;
+          }
+          return null;
+        });
       }, 1000);
-      const minutes = timerCountdown.getMinutes()
-      const seconds = timerCountdown.getSeconds()
-      
-      if(!minutes && !seconds){
-        setActiveTask(null)
-        setTimerCountDown(null)
-        console.log(timerCountdown)
-      }
+
+      // Limpa o intervalo quando o componente é desmontado ou o timerCountdown muda
+      return () => clearInterval(interval);
     }
-    console.log(timerCountdown)
-
-  }, [timerCountdown])
-  
-
-  function subSecTimerCountDown(){
-    //TODO Como fazer para o componente continuar atualizando simultaneamente ?
-    setTimerCountDown(subSeconds(timerCountdown, 1))
-  }
+  }, [timerCountdown]);
     
   return (
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">
-      <Input registerProperty={register} subSecTimerCountDown={subSecTimerCountDown}/> 
-      <Timer currentTime={timerCountdown} setTimerCountDown={setTimerCountDown}/>
+      <Input registerProperty={register}/> 
+      <Timer currentTime={timerCountdown}/>
       <Button color="green" disabled={buttonDisabled} />
     </form>
   )

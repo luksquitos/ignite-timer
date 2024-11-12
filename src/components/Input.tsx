@@ -5,9 +5,7 @@ interface InputProps {
   registerProperty: UseFormRegister<FieldValues> 
 }
 
-export function Input({registerProperty, subSecTimerCountDown}: InputProps){
-  
-
+export function Input({registerProperty}: InputProps){
   return(
     <div className="flex justify-center items-center gap-2">
       <p>Vou trabalhar em</p>
@@ -23,7 +21,7 @@ export function Input({registerProperty, subSecTimerCountDown}: InputProps){
       </datalist>
       <p>durante</p>
       <div className="flex justify-center items-center border-b-2 border-b-gray4 gap-2">
-        <button className="text-white" onClick={subSecTimerCountDown}>-</button>
+        <button className="text-white">-</button>
         <input 
           type="number"
           className="overflow-hidden w-5 bg-transparent flex justify-center text-center focus:outline-none text-gray7"
