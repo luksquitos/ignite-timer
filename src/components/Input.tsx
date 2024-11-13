@@ -5,11 +5,12 @@ interface InputProps {
   registerProperty: UseFormRegister<FieldValues> 
 }
 
-export function Input({registerProperty}: InputProps){
+export function Input({registerProperty, ...props}: InputProps){
   return(
     <div className="flex justify-center items-center gap-2">
       <p>Vou trabalhar em</p>
       <input 
+        {...props}
         className="bg-transparent w-64 text-gray7 px-2 border-b-2 border-b-gray4 placeholder:text-gray4 focus:outline-none focus:border-b-gray7 "
         placeholder="Dê um nome para o seu projeto" 
         list="task-list"

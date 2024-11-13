@@ -40,7 +40,7 @@ export function Home(){
   const [activeTask, setActiveTask] = useState<Task | null>(null)
   const [timerCountdown, setTimerCountDown] = useState<Date | null>(null)
   const buttonDisabled = !watch("task")
-  const hasActiveTask = activeTask != null
+  const hasActiveTask = Boolean(activeTask)
   
   function createNewTask(data: newTaskFormData){
     const id = String(new Date().getTime())
@@ -86,7 +86,7 @@ export function Home(){
           }
           return null;
         });
-      }, 100);
+      }, 1000);
       
       // Limpa o intervalo quando o componente é desmontado ou o timerCountdown muda
       return () => clearInterval(interval);
@@ -95,7 +95,7 @@ export function Home(){
     
   return (
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">
-      <Input registerProperty={register}/> 
+      <Input registerProperty={register} disabled={hasActiveTask}/> 
       <Timer currentTime={timerCountdown}/>
       <Button hasActiveTask={hasActiveTask} interruptTimer={interruptTimer} disabled={buttonDisabled} />
     </form>
