@@ -1,8 +1,15 @@
+import { useEffect } from "react"
 import { NumberTimer } from "./NumberTimer"
 
 export function Timer({currentTime}:{currentTime: Date | null,}) {
   const minutes = currentTime? String(currentTime.getMinutes()).padStart(2, "0"): "00"
   const seconds = currentTime? String(currentTime.getSeconds()).padStart(2, "0"): "00"
+
+  useEffect(() => {
+    if(currentTime){
+      document.title = `${minutes}:${seconds}`
+    }
+  }, [minutes, seconds])
   
   return (
     <div className="mt-14 w-full h-[12.5rem] flex justify-between items-start">
