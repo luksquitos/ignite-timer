@@ -1,5 +1,35 @@
 import { Task } from "./Task";
 
+const tasksJson = [
+  {
+    "id": 1,
+    "description": "Treinando meu dragão",
+    "status": "finished",
+    "minutesAmount": 60,
+    "createdAt": new Date("2025-01-10 10:00:00")
+  },
+  {
+    "id": 2,
+    "description": "Almoçar",
+    "status": "finished",
+    "minutesAmount": 14,
+    "createdAt": new Date("2025-06-18 12:00:00")
+  },
+  {
+    "id": 3,
+    "description": "Estudar React Nature",
+    "status": "pending",
+    "minutesAmount": 60,
+    "createdAt": new Date("2025-06-18 15:00:00")
+  },
+  {
+    "id": 4,
+    "description": "Jogar com os amigos",
+    "status": "canceled",
+    "minutesAmount": 60,
+    "createdAt": new Date("2025-05-10 16:14:00")
+  },
+]
 
 export function TaskBoard(){
   return (
@@ -10,8 +40,20 @@ export function TaskBoard(){
         <p className="flex items-center col-span-3">Início</p>
         <p className="flex items-center col-span-2">Status</p>
       </header>
-      <section className="w-full h-[408px] overflow-y-auto">
-        {Array.from({length:10}).map(task=><Task/>)} 
+      <section className="w-full h-[408px] overflow-y-auto">          
+        {
+          tasksJson.map((task) => {
+            return (
+              <Task 
+                id={task.id}
+                description={task.description}
+                status={task.status}
+                minutesAmount={task.minutesAmount}
+                createdAt={task.createdAt}
+              />
+          )
+          })
+        }
       </section>
     </section>
   )
