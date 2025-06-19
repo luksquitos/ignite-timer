@@ -1,8 +1,8 @@
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"
 
-interface TaskProps {
-  id: number,
+export interface TaskProps {
+  id: string,
   description: string,
   status: "pending" | "canceled" | "finished"
   createdAt: Date,

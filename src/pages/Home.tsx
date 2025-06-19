@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from 'zod';
 import { useEffect, useState } from "react";
 import { subSeconds } from "date-fns";
+import { useTasks } from "../contexts/TasksContext";
+import { TaskProps } from "../components/Task";
 
 
 const createNewTaskValidationSchema = zod.object({
@@ -15,16 +17,6 @@ const createNewTaskValidationSchema = zod.object({
     .max(60, "O número máximo é 60")
 })
 
-interface Task {
-  "id": string, // 
-  "description": string,
-  "minutesAmount": number,
-}
-
-// interface newTaskFormData {
-//   "task": string,
-//   "numberInput": number,
-// }
 
 type newTaskFormData = zod.infer<typeof createNewTaskValidationSchema>
 
@@ -36,21 +28,23 @@ export function Home(){
       "numberInput": 0
     }
   });
-  const [tasks, setTask] = useState<Task[]>([])
-  const [activeTask, setActiveTask] = useState<Task | null>(null)
+  const {tasks, setTasks} = useTasks()
+  const [activeTask, setActiveTask] = useState<TaskProps | null>(null)
   const [timerCountdown, setTimerCountDown] = useState<Date | null>(null)
   const buttonDisabled = !watch("task")
   const hasActiveTask = Boolean(activeTask)
   
   function createNewTask(data: newTaskFormData){
     const id = String(new Date().getTime())
-    const newTask: Task = {
+    const newTask: TaskProps = {
       "id": id,
       "description": data.task,
-      "minutesAmount": data.numberInput
+      "minutesAmount": data.numberInput,
+      "createdAt": new Date(),
+      "status": "pending"
     }
     // setTask([...tasks, newTask]) // Não garante o estado atual do objeto.
-    setTask((state) => [...state, newTask]) // Garante o estado atual do objeto
+    setTasks((task) => [newTask, ...tasks]) // Garante o estado atual do objeto
     setActiveTask(newTask)
     //genius
     setTimerCountDown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
@@ -86,7 +80,7 @@ export function Home(){
           }
           return null;
         });
-      }, 1000);
+      }, 100);
       
       // Limpa o intervalo quando o componente é desmontado ou o timerCountdown muda
       return () => clearInterval(interval);
