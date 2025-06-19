@@ -4,8 +4,6 @@ import { Timer } from "../components/Timer";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from 'zod';
-import { useEffect, useState } from "react";
-import { subSeconds } from "date-fns";
 import { useTasks } from "../contexts/TasksContext";
 import { TaskProps } from "../components/Task";
 import { useTimer } from "../contexts/TimerContext";
@@ -31,7 +29,7 @@ export function Home(){
   });
   const {tasks, setTasks} = useTasks()
   const {activeTask, setActiveTask} = useTimer()
-  const {timerCountdown, setTimerCountdown} = useTimer()
+  const {setTimerCountdown} = useTimer()
   const buttonDisabled = !watch("task")
   const hasActiveTask = Boolean(activeTask)
   
@@ -51,18 +49,12 @@ export function Home(){
     setTimerCountdown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
     reset()
   }
-  // Com contexto, pode ser movido para o arquivo que a usa.
-  function interruptTimer(){
-    // Pegar a activeTask e mudar seu status para 'canceled'.
-    setTimerCountdown(null)
-    setActiveTask(null)
-  }
     
   return (
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">
       <Input registerProperty={register} disabled={hasActiveTask}/> 
-      <Timer currentTime={timerCountdown}/>
-      <Button hasActiveTask={hasActiveTask} interruptTimer={interruptTimer} disabled={buttonDisabled} />
+      <Timer />
+      <Button disabled={buttonDisabled} />
     </form>
   )
 }

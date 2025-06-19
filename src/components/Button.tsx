@@ -1,4 +1,5 @@
 import { Play, HandPalm } from "@phosphor-icons/react"
+import { useTimer } from "../contexts/TimerContext";
 
 const ButtonVariants = {
   "green": "bg-green [&:not(:disabled):hover]:bg-green-dark",
@@ -6,7 +7,16 @@ const ButtonVariants = {
 }
 
 
-export function Button({hasActiveTask, interruptTimer, ...props}: {hasActiveTask: boolean; [key: string]: any} ){
+export function Button({...props}: {[key: string]: any} ){
+  const {activeTask, setActiveTask, setTimerCountdown} = useTimer() 
+  const hasActiveTask = Boolean(activeTask)
+  
+  function interruptTimer(){
+    // TODO Setar o status de activeTask para "canceled"
+    setActiveTask(null)
+    setTimerCountdown(null)
+  }
+
   if(hasActiveTask){
     return (
       <button onClick={interruptTimer} className={`mt-[76px] w-full h-12 flex justify-center items-center gap-2 rounded-lg ${ButtonVariants['red']} text-gray7  disabled:opacity-70 disabled:cursor-not-allowed `}>

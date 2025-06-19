@@ -29,6 +29,10 @@ export function TimerContextProvider({children}: {children: ReactNode}){
               const newTime = subSeconds(prevCountdown, 1);
               const minutes = newTime.getMinutes();
               const seconds = newTime.getSeconds();
+              // Atualizar document.title
+              const minutesString = String(minutes).padStart(2, "0")
+              const secondsString = String(seconds).padStart(2, "0")
+              document.title = `${minutesString}:${secondsString}`
   
               // Se o tempo acabou, limpa o intervalo
               if (!minutes && !seconds) {

@@ -1,16 +1,11 @@
-import { useEffect } from "react"
 import { NumberTimer } from "./NumberTimer"
+import { useTimer } from "../contexts/TimerContext"
 
-export function Timer({currentTime}:{currentTime: Date | null,}) {
-  const minutes = currentTime? String(currentTime.getMinutes()).padStart(2, "0"): "00"
-  const seconds = currentTime? String(currentTime.getSeconds()).padStart(2, "0"): "00"
+export function Timer() {
+  const {timerCountdown} = useTimer()
+  const minutes = timerCountdown? String(timerCountdown.getMinutes()).padStart(2, "0"): "00"
+  const seconds = timerCountdown? String(timerCountdown.getSeconds()).padStart(2, "0"): "00"
 
-  useEffect(() => {
-    if(currentTime){
-      document.title = `${minutes}:${seconds}`
-    }
-  }, [minutes, seconds])
-  
   return (
     <div className="mt-14 w-full h-[12.5rem] flex justify-between items-start">
       <NumberTimer num={Number(minutes[0])}/>
