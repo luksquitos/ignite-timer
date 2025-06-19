@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { subSeconds } from "date-fns";
 import { useTasks } from "../contexts/TasksContext";
 import { TaskProps } from "../components/Task";
+import { useTimer } from "../contexts/TimerContext";
 
 
 const createNewTaskValidationSchema = zod.object({
@@ -29,8 +30,8 @@ export function Home(){
     }
   });
   const {tasks, setTasks} = useTasks()
-  const [activeTask, setActiveTask] = useState<TaskProps | null>(null)
-  const [timerCountdown, setTimerCountDown] = useState<Date | null>(null)
+  const {activeTask, setActiveTask} = useTimer()
+  const {timerCountdown, setTimerCountdown} = useTimer()
   const buttonDisabled = !watch("task")
   const hasActiveTask = Boolean(activeTask)
   
@@ -47,45 +48,15 @@ export function Home(){
     setTasks((task) => [newTask, ...tasks]) // Garante o estado atual do objeto
     setActiveTask(newTask)
     //genius
-    setTimerCountDown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
+    setTimerCountdown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
     reset()
   }
-  
+  // Com contexto, pode ser movido para o arquivo que a usa.
   function interruptTimer(){
-    setTimerCountDown(null)
+    // Pegar a activeTask e mudar seu status para 'canceled'.
+    setTimerCountdown(null)
     setActiveTask(null)
   }
-  
-  useEffect(() => {
-    // Esse código foi corrigido pelo chat. De 
-    // acordo com ele, o setTimeout estava
-    // se sobrepondo entre os loops do useeffect.
-    
-    // Verifica se o timerCountdown está definido
-    if (timerCountdown) {
-      const interval = setInterval(() => {
-        setTimerCountDown((prevCountdown) => {
-          if (prevCountdown) {
-            const newTime = subSeconds(prevCountdown, 1);
-            const minutes = newTime.getMinutes();
-            const seconds = newTime.getSeconds();
-
-            // Se o tempo acabou, limpa o intervalo
-            if (!minutes && !seconds) {
-              clearInterval(interval);
-              setActiveTask(null)
-              return null;
-            }
-            return newTime;
-          }
-          return null;
-        });
-      }, 100);
-      
-      // Limpa o intervalo quando o componente é desmontado ou o timerCountdown muda
-      return () => clearInterval(interval);
-    }
-  }, [timerCountdown]);
     
   return (
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">

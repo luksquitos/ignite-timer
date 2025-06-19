@@ -2,6 +2,7 @@ import { TasksContextProvider } from "../contexts/TasksContext"
 import { Router } from "../Router"
 import { BrowserRouter } from "react-router-dom"
 import { TaskProps } from "./Task"
+import { TimerContextProvider } from "../contexts/TimerContext"
 // import TailwindBreakpoint from "./TailwindBreakpoint"
 // CTRL + SHIPT + P 
 // TypeScript Remove all unused imports
@@ -42,9 +43,11 @@ export function App() {
   return (
     <BrowserRouter>
         <main className="bg-gray1 h-screen flex justify-center items-center">
-          <TasksContextProvider initial={tasksJson}>
-            <Router />
-          </TasksContextProvider>
+          <TimerContextProvider>
+            <TasksContextProvider initial={tasksJson}>
+              <Router />
+            </TasksContextProvider>
+          </TimerContextProvider>
         </main>
     </BrowserRouter>
   )
