@@ -43,11 +43,11 @@ export function App() {
   return (
     <BrowserRouter>
         <main className="bg-gray1 h-screen flex justify-center items-center">
-          <TimerContextProvider>
-            <TasksContextProvider initial={tasksJson}>
+          <TasksContextProvider initial={tasksJson}>
+            <TimerContextProvider>
               <Router />
-            </TasksContextProvider>
-          </TimerContextProvider>
+            </TimerContextProvider>
+          </TasksContextProvider>
         </main>
     </BrowserRouter>
   )

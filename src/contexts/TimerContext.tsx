@@ -1,6 +1,7 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { TaskProps } from "../components/Task";
 import { subSeconds } from "date-fns";
+import { useTasks } from "./TasksContext";
 
 
 interface TimerContextInterface {
@@ -15,6 +16,23 @@ const TimerContext = createContext<TimerContextInterface |undefined >(undefined)
 export function TimerContextProvider({children}: {children: ReactNode}){
   const [activeTask, setActiveTask] = useState<TaskProps | null>(null)
   const [timerCountdown, setTimerCountdown] = useState<Date | null>(null)
+  const {tasks, setTasks} = useTasks()
+
+  function finishActiveTask(){
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === activeTask?.id){
+        return {
+          ...task,
+          status: "finished"
+        }
+      }
+      return task
+    })
+
+    setTasks(updatedTasks)
+    setActiveTask(null)
+    document.title = "Timer Ignite"
+  }
 
   useEffect(() => {
       // Esse código foi corrigido pelo chat. De 
@@ -37,7 +55,7 @@ export function TimerContextProvider({children}: {children: ReactNode}){
               // Se o tempo acabou, limpa o intervalo
               if (!minutes && !seconds) {
                 clearInterval(interval);
-                setActiveTask(null)
+                finishActiveTask()
                 return null;
               }
               return newTime;
