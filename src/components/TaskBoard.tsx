@@ -1,37 +1,10 @@
+import { useTasks } from "../contexts/TasksContext";
 import { Task } from "./Task";
 
-const tasksJson = [
-  {
-    "id": 1,
-    "description": "Treinando meu dragão",
-    "status": "finished",
-    "minutesAmount": 60,
-    "createdAt": new Date("2025-01-10 10:00:00")
-  },
-  {
-    "id": 2,
-    "description": "Almoçar",
-    "status": "finished",
-    "minutesAmount": 14,
-    "createdAt": new Date("2025-06-18 12:00:00")
-  },
-  {
-    "id": 3,
-    "description": "Estudar React Nature",
-    "status": "pending",
-    "minutesAmount": 60,
-    "createdAt": new Date("2025-06-18 15:00:00")
-  },
-  {
-    "id": 4,
-    "description": "Jogar com os amigos",
-    "status": "canceled",
-    "minutesAmount": 60,
-    "createdAt": new Date("2025-05-10 16:14:00")
-  },
-]
 
 export function TaskBoard(){
+  const {tasks} = useTasks()
+
   return (
     <section>
       <header className="mt-8 px-6 w-full h-[54px] bg-gray3 text-gray7 grid grid-cols-11 rounded-tl-lg rounded-tr-lg">
@@ -42,7 +15,7 @@ export function TaskBoard(){
       </header>
       <section className="w-full h-[408px] overflow-y-auto">          
         {
-          tasksJson.map((task) => {
+          tasks.map((task) => {
             return (
               <Task 
                 id={task.id}

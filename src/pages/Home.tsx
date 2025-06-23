@@ -4,8 +4,9 @@ import { Timer } from "../components/Timer";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from 'zod';
-import { useEffect, useState } from "react";
-import { subSeconds } from "date-fns";
+import { useTasks } from "../contexts/TasksContext";
+import { TaskProps } from "../components/Task";
+import { useTimer } from "../contexts/TimerContext";
 
 
 const createNewTaskValidationSchema = zod.object({
@@ -15,16 +16,6 @@ const createNewTaskValidationSchema = zod.object({
     .max(60, "O número máximo é 60")
 })
 
-interface Task {
-  "id": string, // 
-  "description": string,
-  "minutesAmount": number,
-}
-
-// interface newTaskFormData {
-//   "task": string,
-//   "numberInput": number,
-// }
 
 type newTaskFormData = zod.infer<typeof createNewTaskValidationSchema>
 
@@ -36,68 +27,34 @@ export function Home(){
       "numberInput": 0
     }
   });
-  const [tasks, setTask] = useState<Task[]>([])
-  const [activeTask, setActiveTask] = useState<Task | null>(null)
-  const [timerCountdown, setTimerCountDown] = useState<Date | null>(null)
+  const {tasks, setTasks} = useTasks()
+  const {activeTask, setActiveTask} = useTimer()
+  const {setTimerCountdown} = useTimer()
   const buttonDisabled = !watch("task")
   const hasActiveTask = Boolean(activeTask)
   
   function createNewTask(data: newTaskFormData){
     const id = String(new Date().getTime())
-    const newTask: Task = {
+    const newTask: TaskProps = {
       "id": id,
       "description": data.task,
-      "minutesAmount": data.numberInput
+      "minutesAmount": data.numberInput,
+      "createdAt": new Date(),
+      "status": "pending"
     }
     // setTask([...tasks, newTask]) // Não garante o estado atual do objeto.
-    setTask((state) => [...state, newTask]) // Garante o estado atual do objeto
+    setTasks((task) => [newTask, ...tasks]) // Garante o estado atual do objeto
     setActiveTask(newTask)
     //genius
-    setTimerCountDown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
+    setTimerCountdown(new Date(`November 10, 00:${newTask.minutesAmount}:00`))
     reset()
   }
-  
-  function interruptTimer(){
-    setTimerCountDown(null)
-    setActiveTask(null)
-  }
-  
-  useEffect(() => {
-    // Esse código foi corrigido pelo chat. De 
-    // acordo com ele, o setTimeout estava
-    // se sobrepondo entre os loops do useeffect.
-    
-    // Verifica se o timerCountdown está definido
-    if (timerCountdown) {
-      const interval = setInterval(() => {
-        setTimerCountDown((prevCountdown) => {
-          if (prevCountdown) {
-            const newTime = subSeconds(prevCountdown, 1);
-            const minutes = newTime.getMinutes();
-            const seconds = newTime.getSeconds();
-
-            // Se o tempo acabou, limpa o intervalo
-            if (!minutes && !seconds) {
-              clearInterval(interval);
-              setActiveTask(null)
-              return null;
-            }
-            return newTime;
-          }
-          return null;
-        });
-      }, 1000);
-      
-      // Limpa o intervalo quando o componente é desmontado ou o timerCountdown muda
-      return () => clearInterval(interval);
-    }
-  }, [timerCountdown]);
     
   return (
     <form onSubmit={handleSubmit(createNewTask)} className="mt-[75px] w-[655px] h-[420px]">
       <Input registerProperty={register} disabled={hasActiveTask}/> 
-      <Timer currentTime={timerCountdown}/>
-      <Button hasActiveTask={hasActiveTask} interruptTimer={interruptTimer} disabled={buttonDisabled} />
+      <Timer />
+      <Button disabled={buttonDisabled} />
     </form>
   )
 }
